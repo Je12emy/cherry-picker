@@ -11,11 +11,16 @@ fn main() {
     let stdin = io::stdin();
     let mut input = stdin.lock().keys();
     let mut stdout = io::stdout().into_raw_mode().unwrap();
-
     loop {
+        write!(
+            stdout,
+            "{} {}",
+            termion::cursor::Goto(0, 2),
+            termion::clear::AfterCursor
+        )
+        .unwrap();
         write!(stdout, "Available options:\r\n").unwrap();
         for (index, value) in options.iter().enumerate() {
-            // write!(stdout,);
             let selected = selected.contains(&index);
             let focused = index == current_index;
             let selected_indicator = if selected { "[x]" } else { "[ ]" };
@@ -26,11 +31,11 @@ fn main() {
                 selected_indicator, value, focused_indicator,
             )
             .unwrap();
-            stdout.flush().unwrap();
         }
         write!(
             stdout,
-            "Use K or ↑ (UP ARROW) and J or ↓ (DOWN ARROW) to select or deselect an item:\r\n",
+            "Use K or ↑ (UP ARROW) and J or ↓ (DOWN ARROW) to select or deselect an item.{}\r\n",
+            termion::cursor::Hide,
         )
         .unwrap();
         stdout.flush().unwrap();
@@ -51,6 +56,3 @@ fn main() {
         }
     }
 }
-
-
-
