@@ -1,42 +1,56 @@
 use std::io;
+use std::io::Write;
+use termion::{event::Key, input::TermRead, raw::IntoRawMode};
 
 fn main() {
     let options = vec!["Option A", "Option B"];
-    let mut selected_options_indexes: Vec<usize> = vec![];
-    let mut current_selection_index: usize = 0;
+
+    let selected: Vec<usize> = vec![];
+    let mut current_index: usize = 0;
+
+    let stdin = io::stdin();
+    let mut input = stdin.lock().keys();
+    let mut stdout = io::stdout().into_raw_mode().unwrap();
+
     loop {
-        let mut input = String::new();
-        println!("Use J or UP ARROW and K or DOWN ARROW to select an item:");
-        for (i, value) in options.iter().enumerate() {
-            if selected_options_indexes.contains(&i) {
-                print!("[x] ");
-            } else {
-                print!("[ ] ");
-            }
-            print!("{}", value);
-            if i == current_selection_index {
-                println!(" <")
-            } else {
-                println!("");
-            }
+        write!(stdout, "Available options:\r\n").unwrap();
+        for (index, value) in options.iter().enumerate() {
+            // write!(stdout,);
+            let selected = selected.contains(&index);
+            let focused = index == current_index;
+            let selected_indicator = if selected { "[x]" } else { "[ ]" };
+            let focused_indicator = if focused { "<" } else { "" };
+            write!(
+                stdout,
+                "{} {} {}\r\n",
+                selected_indicator, value, focused_indicator,
+            )
+            .unwrap();
+            stdout.flush().unwrap();
         }
-        io::stdin().read_line(&mut input).unwrap();
-        let input = input.trim().chars().next();
-        if let Some(c) = input {
-            if c == 'j' {
-                if (current_selection_index + 1) <= options.len() {
-                    println!("DOWN");
-                    current_selection_index = current_selection_index + 1;
+        write!(
+            stdout,
+            "Use K or ↑ (UP ARROW) and J or ↓ (DOWN ARROW) to select or deselect an item:\r\n",
+        )
+        .unwrap();
+        stdout.flush().unwrap();
+        if let Some(Ok(key_event)) = input.next() {
+            match key_event {
+                Key::Char('j') | Key::Down => {
+                    if (current_index + 1) <= options.len() {
+                        current_index = current_index + 1;
+                    }
                 }
-            } else if c == 'k' {
-                if (current_selection_index - 1) >= 0 {
-                    println!("UP");
-                    current_selection_index = current_selection_index - 1;
+                Key::Char('k') | Key::Up => {
+                    if (current_index - 1) >= 0 {
+                        current_index = current_index - 1;
+                    }
                 }
-            } else {
-                println!("Not a valid option");
-                break;
+                _ => {}
             }
         }
     }
 }
+
+
+
