@@ -5,7 +5,7 @@ use termion::{event::Key, input::TermRead, raw::IntoRawMode};
 fn main() {
     let options = vec!["Option A", "Option B"];
 
-    let selected: Vec<usize> = vec![];
+    let mut selected: Vec<usize> = vec![];
     let mut current_index: usize = 0;
 
     let stdin = io::stdin();
@@ -49,6 +49,16 @@ fn main() {
                 Key::Char('k') | Key::Up => {
                     if (current_index - 1) >= 0 {
                         current_index = current_index - 1;
+                    }
+                }
+                Key::Char(' ') => {
+                    let is_selected = selected.contains(&current_index);
+                    if is_selected {
+                        if let Some(to_remove) = selected.iter().position(|x| x == &current_index) {
+                            selected.remove(to_remove);
+                        }
+                    } else {
+                        selected.push(current_index);
                     }
                 }
                 _ => {}
