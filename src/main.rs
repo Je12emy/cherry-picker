@@ -1,4 +1,4 @@
-use cherry_picker::Picker;
+use picker::Picker;
 
 fn main() {
     let options = vec!["Option A", "Option B"];
