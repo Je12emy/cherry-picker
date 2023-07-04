@@ -2,7 +2,7 @@ use std::io;
 use std::io::Write;
 use termion::{event::Key, input::TermRead, raw::IntoRawMode};
 
-#[derive()]
+#[derive(Debug)]
 pub struct Picker<'a> {
     pub available_options: &'a Vec<&'a str>,
     pub selected_options_indexes: Option<Vec<usize>>,
@@ -17,7 +17,7 @@ impl<'a> Picker<'a> {
     }
 
     pub fn select(&mut self) {
-        if let None = &self.selected_options_indexes {
+        if self.selected_options_indexes.is_none() {
             let mut selected: Vec<usize> = vec![];
             let mut current_index: usize = 0;
 
@@ -61,7 +61,7 @@ impl<'a> Picker<'a> {
                         }
                         Key::Char('k') | Key::Up => {
                             if current_index > 0 {
-                                current_index -= 1;
+                                current_index = current_index.saturating_sub(1);
                             }
                         }
                         Key::Char(' ') => {
