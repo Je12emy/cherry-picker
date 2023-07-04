@@ -61,6 +61,11 @@ fn main() {
                         selected.push(current_index);
                     }
                 }
+                Key::Char('\n') => {
+                    stdout.flush().unwrap();
+                    write!(stdout, "{:?}\r\n", selected).unwrap();
+                    break;
+                }
                 _ => {}
             }
         }
