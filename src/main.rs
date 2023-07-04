@@ -42,13 +42,13 @@ fn main() {
         if let Some(Ok(key_event)) = input.next() {
             match key_event {
                 Key::Char('j') | Key::Down => {
-                    if (current_index + 1) <= options.len() {
-                        current_index = current_index + 1;
+                    if current_index < options.len() - 1 {
+                        current_index += 1;
                     }
                 }
                 Key::Char('k') | Key::Up => {
-                    if (current_index - 1) >= 0 {
-                        current_index = current_index - 1;
+                    if current_index > 0 {
+                        current_index -= 1;
                     }
                 }
                 Key::Char(' ') => {
