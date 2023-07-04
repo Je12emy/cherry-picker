@@ -2,6 +2,10 @@
 name = "cherry-picker"
 version = "0.1.0"
 edition = "2021"
+description = "A dead simple multi-select propmt for your CLI applications"
+license = "MIT"
+keywords = ["cli", "multi-select", "select", "input"]
+categories = ["Command-line interface"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
