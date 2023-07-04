@@ -47,7 +47,7 @@ impl<'a> Picker<'a> {
                 }
                 write!(
             stdout,
-            "Use K or ↑ (UP ARROW) and J or ↓ (DOWN ARROW) to select or deselect an item.{}\r\n",
+            "Use K or ↑ (UP ARROW) and J or ↓ (DOWN ARROW) to select or deselect an item. Press [ENTER] to confirm your selection{}\r\n",
             termion::cursor::Hide,
         )
                 .unwrap();
