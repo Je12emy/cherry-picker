@@ -1,4 +1,4 @@
-use rust_picker::Picker;
+use cherry_picker::Picker;
 
 fn main() {
     let options = vec!["Option A", "Option B"];
