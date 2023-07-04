@@ -8,6 +8,9 @@ keywords = ["cli", "multi-select", "select", "input"]
 categories = ["Command-line interface"]
 repository = "https://github.com/Je12emy/cherry-picker"
 
+[lib]
+name = "picker"
+path = "src/lib.rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
