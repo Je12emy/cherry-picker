@@ -51,8 +51,8 @@ impl<'a> Picker<'a> {
             termion::cursor::Hide,
         )
                 .unwrap();
-                stdout.flush().unwrap();
                 if let Some(Ok(key_event)) = input.next() {
+                    write!(stdout, "{}", termion::cursor::Show).unwrap();
                     match key_event {
                         Key::Char('j') | Key::Down => {
                             if current_index < self.available_options.len() - 1 {
@@ -79,10 +79,11 @@ impl<'a> Picker<'a> {
                         Key::Char('\n') => {
                             self.selected_options_indexes = Some(selected.clone());
                             break;
-                        },
+                        }
                         _ => {}
                     }
                 }
+                stdout.flush().unwrap();
             }
         }
     }
