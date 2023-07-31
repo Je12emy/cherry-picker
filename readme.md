@@ -1,3 +1,3 @@
 # Cherry Picker
 
-A dead simple multi-select propmpt for your CLI application.
+A dead simple multi-select interactive prompt for your CLI application.
